@@ -8,7 +8,7 @@ import Select from 'react-select';
 import { FaRegCopy } from 'react-icons/fa'; // Copy icon
 import { AiOutlineLoading3Quarters } from 'react-icons/ai'; // Loading spinner icon
 import { languages } from '../language'; // Import languages
-import { LanguageOption, TranslationSuccessResponse, TranslationErrorResponse, TranslationInternalErrorResponse } from '../types/types'; // Import types
+import { LanguageOption, TranslationSuccessResponse, TranslationErrorResponse, TranslationInternalErrorResponse } from '../../types/translate'; // Import types
 import DarkModeToggle from '../DarkMode/index'; // Import DarkModeToggle
 
 const customSelectStyles = {

@@ -2,6 +2,7 @@
 
 export interface TranslationSuccessResponse {
     translation: string;
+    timestamp: any,
 }
 
 export interface TranslationErrorResponse {
