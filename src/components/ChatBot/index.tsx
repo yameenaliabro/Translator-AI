@@ -48,27 +48,18 @@ const customSelectStyles = {
 const TranslationForm: React.FC = () => {
     // State variables
     const [inputLanguage, setInputLanguage] = useState<LanguageOption | null>({
-        value: 'sd',
-        label: 'Sindhi',
-    });
-    const [outputLanguage, setOutputLanguage] = useState<LanguageOption | null>({
         value: 'en',
         label: 'English',
+    });
+    const [outputLanguage, setOutputLanguage] = useState<LanguageOption | null>({
+        value: 'ur',
+        label: 'Urdu',
     });
     const [inputText, setInputText] = useState<string>('');
     const [translatedText, setTranslatedText] = useState<string>('');
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
 
-    // Optional: Load translation history from localStorage
-    const [history, setHistory] = useState<TranslationSuccessResponse[]>([]);
-
-    useEffect(() => {
-        const storedHistory = localStorage.getItem('translationHistory');
-        if (storedHistory) {
-            setHistory(JSON.parse(storedHistory));
-        }
-    }, []);
 
     // Handler for form submission
     const handleSubmit = async (e: FormEvent) => {
@@ -103,8 +94,7 @@ const TranslationForm: React.FC = () => {
                     translation: response.data.translation,
                     timestamp: new Date().toISOString(),
                 };
-                const updatedHistory = [newTranslation, ...history];
-                setHistory(updatedHistory);
+                const updatedHistory = [newTranslation];
 
                 // Store in localStorage
                 localStorage.setItem('translationHistory', JSON.stringify(updatedHistory));
@@ -129,11 +119,6 @@ const TranslationForm: React.FC = () => {
         alert('Translated text copied to clipboard!');
     };
 
-    // Handler to clear translation history
-    const handleClearHistory = () => {
-        setHistory([]);
-        localStorage.removeItem('translationHistory');
-    };
 
     return (
         <div className="max-w-5xl w-full mx-auto p-8 bg-white dark:bg-gray-800 shadow-lg rounded-lg relative">
@@ -255,30 +240,6 @@ const TranslationForm: React.FC = () => {
                 </div>
             )}
 
-            {/* Translation History */}
-            {history.length > 0 && (
-                <div className="mt-8 p-6 bg-yellow-100 border border-yellow-400 text-yellow-700 rounded-md">
-                    <div className="flex justify-between items-center mb-4">
-                        <h3 className="text-2xl font-semibold">Translation History:</h3>
-                        <button
-                            onClick={handleClearHistory}
-                            className="text-red-500 hover:text-red-700 font-medium"
-                        >
-                            Clear History
-                        </button>
-                    </div>
-                    <ul className="list-disc list-inside space-y-2 max-h-60 overflow-y-auto">
-                        {history.map((item, index) => (
-                            <li key={index} className="break-words">
-                                {item.translation}
-                                <span className="block text-xs text-gray-500 dark:text-gray-400">
-                                    {new Date(item.timestamp).toLocaleString()}
-                                </span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
         </div>
     );
 }

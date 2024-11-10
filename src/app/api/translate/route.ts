@@ -27,12 +27,13 @@ const llm = new ChatGoogleGenerativeAI({
 export async function POST(request: Request): Promise<NextResponse> {
     try {
         // Extract form data
-        const formData = await request.formData();
+        const body = await request.json();
 
         // Retrieve and validate form fields
-        const input_language = formData.get("input_language");
-        const output_language = formData.get("output_language");
-        const input = formData.get("input");
+        const input_language = body.input_language;
+        const output_language = body.output_language;
+        const input = body.input;
+
 
         // Validate 'input_language'
         if (!input_language || typeof input_language !== "string") {
